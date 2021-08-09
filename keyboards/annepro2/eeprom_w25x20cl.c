@@ -18,17 +18,17 @@
 #include <string.h>
 
 /*
-    Note that the implementations of eeprom_XXXX_YYYY on AVR are normally
-    provided by avr-libc. The same functions are reimplemented below and are
-    rerouted to the external SPI equivalent.
+   Note that the implementations of eeprom_XXXX_YYYY on AVR are normally
+   provided by avr-libc. The same functions are reimplemented below and are
+   rerouted to the external SPI equivalent.
 
-    Seemingly, as this is compiled from within QMK, the object file generated
-    during the build overrides the avr-libc implementation during the linking
-    stage.
+   Seemingly, as this is compiled from within QMK, the object file generated
+   during the build overrides the avr-libc implementation during the linking
+   stage.
 
-    On other platforms such as ARM, there are no provided implementations, so
-    there is nothing to override during linkage.
-*/
+   On other platforms such as ARM, there are no provided implementations, so
+   there is nothing to override during linkage.
+   */
 
 #include "wait.h"
 #include "spi_master.h"

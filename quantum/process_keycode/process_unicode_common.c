@@ -92,20 +92,20 @@ __attribute__((weak)) void unicode_input_start(void) {
     clear_mods();                     // Unregister mods to start from a clean state
 
     switch (unicode_config.input_mode) {
-        case UC_MAC:
-            register_code(UNICODE_KEY_MAC);
-            break;
-        case UC_LNX:
-            tap_code16(UNICODE_KEY_LNX);
-            break;
-        case UC_WIN:
-            register_code(KC_LALT);
-            tap_code(KC_PPLS);
-            break;
-        case UC_WINC:
-            tap_code(UNICODE_KEY_WINC);
-            tap_code(KC_U);
-            break;
+    case UC_MAC:
+        register_code(UNICODE_KEY_MAC);
+        break;
+    case UC_LNX:
+        tap_code16(UNICODE_KEY_LNX);
+        break;
+    case UC_WIN:
+        register_code(KC_LALT);
+        tap_code(KC_PPLS);
+        break;
+    case UC_WINC:
+        tap_code(UNICODE_KEY_WINC);
+        tap_code(KC_U);
+        break;
     }
 
     wait_ms(UNICODE_TYPE_DELAY);
@@ -113,21 +113,21 @@ __attribute__((weak)) void unicode_input_start(void) {
 
 __attribute__((weak)) void unicode_input_finish(void) {
     switch (unicode_config.input_mode) {
-        case UC_MAC:
-            unregister_code(UNICODE_KEY_MAC);
-            break;
-        case UC_LNX:
-            tap_code(KC_SPC);
-            if (unicode_saved_caps_lock) {
-                tap_code(KC_CAPS);
-            }
-            break;
-        case UC_WIN:
-            unregister_code(KC_LALT);
-            break;
-        case UC_WINC:
-            tap_code(KC_ENTER);
-            break;
+    case UC_MAC:
+        unregister_code(UNICODE_KEY_MAC);
+        break;
+    case UC_LNX:
+        tap_code(KC_SPC);
+        if (unicode_saved_caps_lock) {
+            tap_code(KC_CAPS);
+        }
+        break;
+    case UC_WIN:
+        unregister_code(KC_LALT);
+        break;
+    case UC_WINC:
+        tap_code(KC_ENTER);
+        break;
     }
 
     set_mods(unicode_saved_mods);  // Reregister previously set mods
@@ -135,21 +135,21 @@ __attribute__((weak)) void unicode_input_finish(void) {
 
 __attribute__((weak)) void unicode_input_cancel(void) {
     switch (unicode_config.input_mode) {
-        case UC_MAC:
-            unregister_code(UNICODE_KEY_MAC);
-            break;
-        case UC_LNX:
-            tap_code(KC_ESC);
-            if (unicode_saved_caps_lock) {
-                tap_code(KC_CAPS);
-            }
-            break;
-        case UC_WINC:
-            tap_code(KC_ESC);
-            break;
-        case UC_WIN:
-            unregister_code(KC_LALT);
-            break;
+    case UC_MAC:
+        unregister_code(UNICODE_KEY_MAC);
+        break;
+    case UC_LNX:
+        tap_code(KC_ESC);
+        if (unicode_saved_caps_lock) {
+            tap_code(KC_CAPS);
+        }
+        break;
+    case UC_WINC:
+        tap_code(KC_ESC);
+        break;
+    case UC_WIN:
+        unregister_code(KC_LALT);
+        break;
     }
 
     set_mods(unicode_saved_mods);  // Reregister previously set mods
@@ -281,33 +281,33 @@ static void audio_helper(void) {
     switch (get_unicode_input_mode()) {
 #    ifdef UNICODE_SONG_MAC
         static float song_mac[][2] = UNICODE_SONG_MAC;
-        case UC_MAC:
-            PLAY_SONG(song_mac);
-            break;
+    case UC_MAC:
+        PLAY_SONG(song_mac);
+        break;
 #    endif
 #    ifdef UNICODE_SONG_LNX
         static float song_lnx[][2] = UNICODE_SONG_LNX;
-        case UC_LNX:
-            PLAY_SONG(song_lnx);
-            break;
+    case UC_LNX:
+        PLAY_SONG(song_lnx);
+        break;
 #    endif
 #    ifdef UNICODE_SONG_WIN
         static float song_win[][2] = UNICODE_SONG_WIN;
-        case UC_WIN:
-            PLAY_SONG(song_win);
-            break;
+    case UC_WIN:
+        PLAY_SONG(song_win);
+        break;
 #    endif
 #    ifdef UNICODE_SONG_BSD
         static float song_bsd[][2] = UNICODE_SONG_BSD;
-        case UC_BSD:
-            PLAY_SONG(song_bsd);
-            break;
+    case UC_BSD:
+        PLAY_SONG(song_bsd);
+        break;
 #    endif
 #    ifdef UNICODE_SONG_WINC
         static float song_winc[][2] = UNICODE_SONG_WINC;
-        case UC_WINC:
-            PLAY_SONG(song_winc);
-            break;
+    case UC_WINC:
+        PLAY_SONG(song_winc);
+        break;
 #    endif
     }
 #endif
@@ -319,22 +319,22 @@ bool process_unicode_common(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         bool shifted = get_mods() & MOD_MASK_SHIFT;
         switch (keycode) {
-            case UNICODE_MODE_FORWARD:
-                cycle_unicode_input_mode(shifted ? -1 : +1);
-                audio_helper();
-                break;
-            case UNICODE_MODE_REVERSE:
-                cycle_unicode_input_mode(shifted ? +1 : -1);
-                audio_helper();
-                break;
+        case UNICODE_MODE_FORWARD:
+            cycle_unicode_input_mode(shifted ? -1 : +1);
+            audio_helper();
+            break;
+        case UNICODE_MODE_REVERSE:
+            cycle_unicode_input_mode(shifted ? +1 : -1);
+            audio_helper();
+            break;
 
-            case UNICODE_MODE_MAC ... UNICODE_MODE_WINC: {
-                // Keycodes and input modes follow the same ordering
-                uint8_t delta = keycode - UNICODE_MODE_MAC;
-                set_unicode_input_mode(UC_MAC + delta);
-                audio_helper();
-                break;
-            }
+        case UNICODE_MODE_MAC ... UNICODE_MODE_WINC: {
+                                                         // Keycodes and input modes follow the same ordering
+                                                         uint8_t delta = keycode - UNICODE_MODE_MAC;
+                                                         set_unicode_input_mode(UC_MAC + delta);
+                                                         audio_helper();
+                                                         break;
+                                                     }
         }
     }
 

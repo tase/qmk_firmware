@@ -6,11 +6,11 @@
 #include "qmk_ap2_led.h"
 
 static const SerialConfig ledUartConfig = {
-  .speed = 115200,
+    .speed = 115200,
 };
 
 static const SerialConfig bleUartConfig = {
-  .speed = 115200,
+    .speed = 115200,
 };
 
 static uint8_t ledMcuWakeup[11] = {
@@ -22,11 +22,11 @@ static bool ledEnabled = false;
 ble_capslock_t BLECapsLock = {._dummy = {0}, .caps_lock = false};
 
 uint16_t annepro2LedMatrix[MATRIX_ROWS * MATRIX_COLS] = {
-  0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-  0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-  0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-  0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-  0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 };
 
 void OVERRIDE bootloader_jump(void) {
@@ -114,61 +114,61 @@ bool OVERRIDE process_record_kb(uint16_t keycode, keyrecord_t *record) {
         }
 
         switch (keycode) {
-            case KC_AP2_BT1:
-                annepro2_ble_broadcast(0);
-                return false;
+        case KC_AP2_BT1:
+            annepro2_ble_broadcast(0);
+            return false;
 
-            case KC_AP2_BT2:
-                annepro2_ble_broadcast(1);
-                return false;
+        case KC_AP2_BT2:
+            annepro2_ble_broadcast(1);
+            return false;
 
-            case KC_AP2_BT3:
-                annepro2_ble_broadcast(2);
-                return false;
+        case KC_AP2_BT3:
+            annepro2_ble_broadcast(2);
+            return false;
 
-            case KC_AP2_BT4:
-                annepro2_ble_broadcast(3);
-                return false;
+        case KC_AP2_BT4:
+            annepro2_ble_broadcast(3);
+            return false;
 
-            case KC_AP2_USB:
-                annepro2_ble_disconnect();
-                return false;
+        case KC_AP2_USB:
+            annepro2_ble_disconnect();
+            return false;
 
-            case KC_AP2_BT_UNPAIR:
-                annepro2_ble_unpair();
-                return false;
+        case KC_AP2_BT_UNPAIR:
+            annepro2_ble_unpair();
+            return false;
 
-            case KC_AP_LED_OFF:
-                annepro2LedDisable();
-                ledEnabled = false;
-                break;
+        case KC_AP_LED_OFF:
+            annepro2LedDisable();
+            ledEnabled = false;
+            break;
 
-            case KC_AP_LED_ON:
-                if (ledEnabled) {
-                    annepro2LedNextProfile();
-                } else {
-                    ledEnabled = true;
-                    annepro2LedEnable();
-                }
-                break;
-
-            case KC_AP_LED_NEXT_PROFILE:
+        case KC_AP_LED_ON:
+            if (ledEnabled) {
                 annepro2LedNextProfile();
-                break;
+            } else {
+                ledEnabled = true;
+                annepro2LedEnable();
+            }
+            break;
 
-            case KC_AP_LED_PREV_PROFILE:
-                annepro2LedPrevProfile();
-                break;
+        case KC_AP_LED_NEXT_PROFILE:
+            annepro2LedNextProfile();
+            break;
 
-            case KC_AP_LED_NEXT_INTENSITY:
-                annepro2LedNextIntensity();
-                return false;
-            case KC_AP_LED_SPEED:
-                annepro2LedNextAnimationSpeed();
-                return false;
+        case KC_AP_LED_PREV_PROFILE:
+            annepro2LedPrevProfile();
+            break;
 
-            default:
-                break;
+        case KC_AP_LED_NEXT_INTENSITY:
+            annepro2LedNextIntensity();
+            return false;
+        case KC_AP_LED_SPEED:
+            annepro2LedNextAnimationSpeed();
+            return false;
+
+        default:
+            break;
         }
     }
     return process_record_user(keycode, record);
